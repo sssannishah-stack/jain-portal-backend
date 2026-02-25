@@ -104,7 +104,7 @@ class AuthService {
       return { type: 'admin', data: admin };
     } else {
       const user = await User.findById(decoded.id);
-      if (!user || !user.isActive) {
+      if (!user) {
         throw ApiError.unauthorized('Invalid token');
       }
       return { type: 'user', data: user };

@@ -6,6 +6,7 @@ const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 
 const config = require('./config');
+const connectDB = require('./config/db');
 const routes = require('./routes');
 const { errorHandler } = require('./middleware');
 
@@ -13,6 +14,18 @@ const app = express();
 
 // Security Middleware
 app.use(helmet());
+
+// Ensure MongoDB is connected before every request (critical for Vercel serverless)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('DB connection failed:', err.message);
+    res.status(500).json({ success: false, message: 'Database connection failed' });
+  }
+});
+
 
 // CORS
 const allowedOrigins = [
