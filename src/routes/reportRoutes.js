@@ -6,6 +6,7 @@ const { protect, adminOnly, userOnly } = require('../middleware');
 // Admin routes
 router.get('/admin/dashboard/stats', protect, adminOnly, reportController.getAdminDashboard);
 router.get('/admin/dashboard/top-performers', protect, adminOnly, reportController.getTopPerformers);
+router.get('/admin/analytics', protect, adminOnly, reportController.getAnalyticsStats);
 router.get('/admin/reports/students', protect, adminOnly, reportController.getStudentReport);
 router.get('/admin/reports/groups', protect, adminOnly, reportController.getGroupReport);
 router.get('/admin/reports/student/:id', protect, adminOnly, reportController.getStudentDetailReport);
@@ -13,6 +14,7 @@ router.get('/admin/reports/group/:id', protect, adminOnly, reportController.getG
 
 // User routes
 router.get('/user/dashboard', protect, userOnly, reportController.getUserDashboard);
+router.get('/user/analytics', protect, userOnly, reportController.getUserAnalytics);
 router.get('/user/report', protect, userOnly, reportController.getUserReport);
 router.get('/user/family-report', protect, userOnly, reportController.getFamilyReport);
 

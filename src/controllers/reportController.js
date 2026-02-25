@@ -115,6 +115,34 @@ const getUserReport = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @desc    Get admin analytics for a custom date range
+ * @route   GET /api/admin/analytics
+ * @access  Admin
+ */
+const getAnalyticsStats = asyncHandler(async (req, res) => {
+  const result = await reportService.getAnalyticsStats(req.query);
+
+  res.status(200).json({
+    success: true,
+    data: result
+  });
+});
+
+/**
+ * @desc    Get user analytics for a custom date range
+ * @route   GET /api/user/analytics
+ * @access  User
+ */
+const getUserAnalytics = asyncHandler(async (req, res) => {
+  const result = await reportService.getUserAnalytics(req.user._id, req.query);
+
+  res.status(200).json({
+    success: true,
+    data: result
+  });
+});
+
+/**
  * @desc    Get family report
  * @route   GET /api/user/family-report
  * @access  User
@@ -145,5 +173,7 @@ module.exports = {
   getGroupDetailReport,
   getTopPerformers,
   getUserReport,
-  getFamilyReport
+  getFamilyReport,
+  getAnalyticsStats,
+  getUserAnalytics
 };
